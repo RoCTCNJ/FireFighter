@@ -14,6 +14,6 @@ From left to right, the three wires are:
 
 -output 
 
--power 
+-ground
 
--ground 
+-power 
