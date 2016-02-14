@@ -1,5 +1,7 @@
 // Fire Fighting Robot Coding
 
+
+//NOTE that the sensors read higher numbers when the object, or wall, are closer. (The farther, the lower number it is,) 
 int ldist; // LEFT SENSOR READ
 int fdist; // FRONT SENSOR READ
 int rdist; // RIGHT SENSOR READ
@@ -34,92 +36,113 @@ void setup(){
   */
   
   pinMode(led, OUTPUT);
-    Serial.begin(9600);
-  while(digitalRead(switchPin) != HIGH) {
-    digitalWrite(led, LOW);
+  Serial.begin(9600);
+  while(digitalRead(switchPin) != HIGH) 
+  {
+      digitalWrite(led, LOW);
   }
 }
-  
+
+
+
 void loop() {
-  currentState = digitalRead(switchPin);
-  //currentState = HIGH;
-      if (currentState == HIGH) { //if switch is flicked on
-      digitalWrite(led, HIGH); // light turns on
+      currentState = digitalRead(switchPin); //What is the curren state? 
+      //currentState = HIGH; //This line is to test the code without the switch
+
       
-     ldist = analogRead(A1);
-     fdist = analogRead(A2);
-     rdist = analogRead(A3);
-     
-      Serial.println("Left Sensor Reads: "); 
-      Serial.println(ldist);
-      Serial.println("Front Sensor Reads: ");
-      Serial.println(fdist);
-      Serial.println("Right Sensor Reads: ");
-      Serial.println(rdist);
-              
-              if (ldist < 400 && fdist < 500) { // when add left sensor include && dist3 < 400 
-                // go forwards
-               Serial.println("Moving Forward");
-               Serial.println();
-                digitalWrite(motor1Pin1, LOW);
-                digitalWrite(motor1Pin2, HIGH);
-                digitalWrite(motor2Pin1, HIGH);
-                digitalWrite(motor2Pin2, LOW);  
-                delay(300);
-                
-              } 
-              
-              if (fdist >= 400){
-                  // STOP
-                Serial.println("Obstruction Ahead");
-                Serial.println();
-                digitalWrite(motor1Pin1, LOW);
-                digitalWrite(motor1Pin2, LOW);
-                digitalWrite(motor2Pin1, LOW);
-                digitalWrite(motor2Pin2, LOW); 
-               delay(300);
-              
-                 //GO BACKWARDS
-               Serial.println("Moving Back");
-               Serial.println();
-                digitalWrite(motor1Pin1, HIGH);
-                digitalWrite(motor1Pin2, LOW);
-                digitalWrite(motor2Pin1, LOW);
-                digitalWrite(motor2Pin2, HIGH);  
-               delay(300); 
-               }
-              
-              
-              if (rdist > 500) {
-              //Right Sensor detects something less 23cm away
-              // Result need to TURN Left
-              Serial.println("Left Turn");
-              Serial.println();
-                digitalWrite(motor1Pin1, HIGH);
-                digitalWrite(motor1Pin2, LOW);
-                digitalWrite(motor2Pin1, HIGH);
-                digitalWrite(motor2Pin2, LOW);  
-                delay (300);
-              }
-            
-            if (ldist > 400) {
-              //Left Sensor detects something less 23cm away
-              // Result need to TURN Right
-                digitalWrite(motor1Pin1, HIGH);
-                digitalWrite(motor1Pin2, LOW);
-                digitalWrite(motor2Pin1, LOW);
-                digitalWrite(motor2Pin2, HIGH);  
-            }
-    
-    else if(currentState == LOW){ 
+      //TURN ON: If the SWITCH is ON, then read sensors and move motors accordingly
+      if (currentState == HIGH)
+      { 
+        digitalWrite(led, HIGH); // light turns on
+        
+        ldist = analogRead(A1);
+        fdist = analogRead(A2);
+        rdist = analogRead(A3);
+       
+        Serial.println("Left Sensor Reads: "); 
+        Serial.println(ldist);
+        Serial.println("Front Sensor Reads: ");
+        Serial.println(fdist);
+        Serial.println("Right Sensor Reads: ");
+        Serial.println(rdist);
+        
+        //GO FORWARD
+        if ((fdist < 400) && (fdist < ldist) && (fdist < rdist)) //If the distance of the front is farther than the distances of left and right,
+        {                                                       //go forward
+          Serial.println("Moving Forward");
+          Serial.println();
+          digitalWrite(motor1Pin1, LOW);
+          digitalWrite(motor1Pin2, HIGH);
+          digitalWrite(motor2Pin1, HIGH);
+          digitalWrite(motor2Pin2, LOW);  
+          // delay(300);
+        } 
+  
+        //STOP 1: if there are objects in the front, left, and right
+        if (fdist == 400 && )
+        {
+          Serial.println("CORNER");
+          Serial.println();
+          digitalWrite(motor1Pin1, LOW);
+          digitalWrite(motor1Pin2, LOW);
+          digitalWrite(motor2Pin1, LOW);
+          digitalWrite(motor2Pin2, LOW); 
+          // delay(300);
+        }
+  
+        //STOP 2: if it's in a tri-fork (there are no objects in the front, left, and right.)
+        //Then, TURN RIGHT 90 degrees and GO FORWARD
+        if (fdist < 400 && rdist < 400 && ldist < 400)
+        {
+          Serial.println("(TRI-FORK) TURN RIGHT");
+          Serial.println();
+          digitalWrite(motor1Pin1, HIGH);
+          digitalWrite(motor1Pin2, LOW);
+          digitalWrite(motor2Pin1, LOW);
+          digitalWrite(motor2Pin2, HIGH);  
+          // delay(300); 
+        }
+        
+        if (rdist > 500) 
+        {
+          //Right Sensor detects something less 23cm away
+          // Result need to TURN Left
+          Serial.println("Left Turn");
+          Serial.println();
+          digitalWrite(motor1Pin1, HIGH);
+          digitalWrite(motor1Pin2, LOW);
+          digitalWrite(motor2Pin1, HIGH);
+          digitalWrite(motor2Pin2, LOW);  
+          //  delay (300);
+        }
+        
+        if (ldist > 400) 
+        {
+          //Left Sensor detects something less 23cm away
+          // Result need to TURN Right
+          digitalWrite(motor1Pin1, HIGH);
+          digitalWrite(motor1Pin2, LOW);
+          digitalWrite(motor2Pin1, LOW);
+          digitalWrite(motor2Pin2, HIGH);  
+        }
+
+      delay(3000); //After reading from sensors, wait 3.000 seconds
+    }
+
+    //TURN OFF the motors if the SWITCH is OFF
+    else if(currentState == LOW)
+    { 
       Serial.println("OFF");
-        digitalWrite(motor1Pin1, LOW);
-        digitalWrite(motor1Pin2, LOW);
-        digitalWrite(motor2Pin1, LOW);
-        digitalWrite(motor2Pin2, LOW);
-        digitalWrite(led, LOW); // ADDED NOW  
-      }
-      delay(1000); // if not 1000 will get jittery
+      digitalWrite(motor1Pin1, LOW);
+      digitalWrite(motor1Pin2, LOW);
+      digitalWrite(motor2Pin1, LOW);
+      digitalWrite(motor2Pin2, LOW);
+      digitalWrite(led, LOW); // ADDED NOW  
+    }
     
-      }
+
+
+
+
+    
 }
