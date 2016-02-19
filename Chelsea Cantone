@@ -125,46 +125,45 @@ void loop() {
       //GO FORWARD
       if ((fdist < 400) && (fdist < ldist) && (fdist < rdist)) //If the distance of the front is farther than the distances of left and right,
       {                                                       //go forward
-         goForward();
+	goForward();
       } 
   
       //STOP 1: if there are objects in the front, left, and right
       if (fdist == 400 && )
       {
-		    //If go right turns the bot 90 degrees clockwise, calling twice
-		    //will turn it 180 degrees clockwise, and it will proceed to move forward.
+	//If go right turns the bot 90 degrees clockwise, calling twice
+	//will turn it 180 degrees clockwise, and it will proceed to move forward.
         stop();
-		    goRight();
-	    	goRight();
-		    goForward();
+	goRight();
+	goRight();
+	goForward();
       }
   
       //STOP 2: if it's in a tri-fork (there are no objects in the front, left, and right.)
       //Then, TURN RIGHT 90 degrees and GO FORWARD
       if (fdist < 400 && rdist < 400 && ldist < 400)
       {
-		    Serial.println("(TRI-FORK) TURN RIGHT");
-        Serial.println();
-        goRight();
-		    goForward();
+      	Serial.println("(TRI-FORK) TURN RIGHT");
+	Serial.println();
+	goRight();
+	goForward();
       }
-        
         if (rdist > 500) 
         {
-         	//Right Sensor detects something less 23cm away
-          // Result need to TURN Left 90 degrees and GO FORWARD
-          Serial.println("Left Turn");
-          Serial.println();
-         	goLeft();
-		      goForward();
+	//Right Sensor detects something less 23cm away
+	// Result need to TURN Left 90 degrees and GO FORWARD
+	Serial.println("Left Turn");
+	Serial.println();
+	goLeft();
+	goForward();
         }
         
-        if (ldist > 400) 
+	if (ldist > 400) 
         {
-          //Left Sensor detects something less 23cm away
-          // Result need to TURN Right
-		      goRight();
-		      goForward();        
+	//Left Sensor detects something less 23cm away
+	// Result need to TURN Right
+	goRight();
+	goForward();        
         }
 
         delay(3000); //After reading from sensors, wait 3.000 seconds
