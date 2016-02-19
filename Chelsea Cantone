@@ -14,7 +14,7 @@ int motor2Pin2 = 6; // right backwards (red wire)
 int motor2Pin1 = 7; // right forwards (black wire)
 /*
 int groundPin = 8; // connect ground sensor to pin 8
-int flamePin = 9; // connect flame sensor ro pin 9
+int flamePin = 9; // connect flame sensor to pin 9
 int fanPin = 10; // connect fan to pin 10
 */
 
@@ -49,8 +49,8 @@ void setup(){
 //situations in the maze (3-way fork, left only, etc.)
 //********************************************
 
-void stop()
-	{
+void Stop()
+  {
   Serial.println("Not Moving");
   Serial.println();
   digitalWrite(motor1Pin1, LOW);
@@ -58,10 +58,10 @@ void stop()
   digitalWrite(motor2Pin1, LOW);
   digitalWrite(motor2Pin2, LOW);  
   // delay(300);
-	}
+  }
 
 void goForward()
-	{
+  {
   Serial.println("Moving Forward");
   Serial.println();
   digitalWrite(motor1Pin1, LOW);
@@ -69,14 +69,14 @@ void goForward()
   digitalWrite(motor2Pin1, HIGH);
   digitalWrite(motor2Pin2, LOW);  
   // delay(300);
-	}
+  }
 
 //SUGGESTION:
 //Turns 90 degrees clockwise, and continues forward
 //Not exactly sure how many seconds that would take...Some delay
 
-void goRight()
-	{
+void turnRight()
+  {
   Serial.println("Turning Right");
   Serial.println();
   digitalWrite(motor1Pin1, HIGH);
@@ -84,13 +84,13 @@ void goRight()
   digitalWrite(motor2Pin1, LOW);
   digitalWrite(motor2Pin2, HIGH);  
   // delay(300); 
-  stop();
-	}
+  Stop();
+  }
 
 //Turns 90 degrees counterclockwise, and continues forward
 
-void goLeft()
-	{
+void turnLeft()
+  {
   Serial.println("Moving Forward");
   Serial.println();
   digitalWrite(motor1Pin1, HIGH);
@@ -98,12 +98,12 @@ void goLeft()
   digitalWrite(motor2Pin1, LOW);
   digitalWrite(motor2Pin2, HIGH);  
   //delay(300);
-  stop();
-	}
+  Stop();
+  }
 
 
 void loop() {
-  currentState = digitalRead(switchPin); //What is the curren state? 
+  currentState = digitalRead(switchPin); //What is the current state? 
   //currentState = HIGH; //This line is to test the code without the switch
   
   //TURN ON: If the SWITCH is ON, then read sensors and move motors accordingly
@@ -121,65 +121,77 @@ void loop() {
       Serial.println(fdist);
       Serial.println("Right Sensor Reads: ");
       Serial.println(rdist);
-        
+
+      // README:
+      // 1) Turning right is prioritized.
+      //    If the robot cannot turn right, it will go straight.
+      // 2) If there is a open space, it will turn right for 3second 
+      //
+      //
+
+      int ttime = 300; //turning right time. Assuming 3s will make it turn 90 
+      int tbtime = 600; //turning back time
+
+      //DEFAULT: TURN RIGHT AND GO FORWARD
+      if (rdist < 300) 
+      {
+          Serial.println("Right Turn");
+          Serial.println();
+          turnRight();
+          delay (ttime); //turn right for 90 degrees
+          goForward();
+          delay (100); 
+      }
+
       //GO FORWARD
-      if ((fdist < 400) && (fdist < ldist) && (fdist < rdist)) //If the distance of the front is farther than the distances of left and right,
-      {                                                       //go forward
-	goForward();
+      else if ((fdist < 400) && (fdist < ldist) && (fdist < rdist)) //If the distance of the front is farther than the distances of left and right,
+      {                                                       			//go forward
+         goForward();
       } 
   
-      //STOP 1: if there are objects in the front, left, and right
-      if (fdist == 400 && )
+      //TURN BACK (TURN RIGHT 180 DEGREES)
+      else if (fdist == 400 && ldist == 400 && rdist == 400)
       {
-	//If go right turns the bot 90 degrees clockwise, calling twice
-	//will turn it 180 degrees clockwise, and it will proceed to move forward.
-        stop();
-	goRight();
-	goRight();
-	goForward();
+        //If go right turns the bot 90 degrees clockwise, calling twice
+        //will turn it 180 degrees clockwise, and it will proceed to move forward.
+        Stop();
+        turnRight();
+        turnRight();
+        goForward();
+        delay(100);
       }
   
-      //STOP 2: if it's in a tri-fork (there are no objects in the front, left, and right.)
-      //Then, TURN RIGHT 90 degrees and GO FORWARD
-      if (fdist < 400 && rdist < 400 && ldist < 400)
-      {
-      	Serial.println("(TRI-FORK) TURN RIGHT");
-	Serial.println();
-	goRight();
-	goForward();
-      }
-        if (rdist > 500) 
+      
+      //TURN LEFT
+      else if (rdist > 500) 
         {
-	//Right Sensor detects something less 23cm away
-	// Result need to TURN Left 90 degrees and GO FORWARD
-	Serial.println("Left Turn");
-	Serial.println();
-	goLeft();
-	goForward();
+          //Right Sensor detects something less 23cm away
+          // Result need to TURN Left 90 degrees and GO FORWARD
+          Serial.println("Left Turn");
+          Serial.println();
+          turnLeft();
+          goForward();
         }
         
-	if (ldist > 400) 
+        if (ldist > 400) 
         {
-	//Left Sensor detects something less 23cm away
-	// Result need to TURN Right
-	goRight();
-	goForward();        
+          //Left Sensor detects something less 23cm away
+          // Result need to TURN Right
+          turnRight();
+          goForward();        
         }
 
         delay(3000); //After reading from sensors, wait 3.000 seconds
     }
 
-    //TURN OFF the motors if the SWITCH is OFF
+    //TURN OFF  the motors if the SWITCH is OFF
     else if(currentState == LOW)
     { 
       Serial.println("OFF");
-      stop();
+      Stop();
       digitalWrite(led, LOW); // ADDED NOW  
   }
  
-
-
-
-
-
 }
+
+
