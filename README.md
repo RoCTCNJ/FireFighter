@@ -20,4 +20,7 @@ From left to right, the three wires are:
 
 -ground
 
--power 
+-power  
+
+# Flame Sensor
+They run on 3-3.5v. 
