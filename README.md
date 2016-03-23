@@ -22,5 +22,7 @@ From left to right, the three wires are:
 
 -power  
 
+HELP the IR sensors are outputing GIBERISH!! Are you using baud rate of 9600?
+
 # Flame Sensor
 They run on 3-3.5v. 
