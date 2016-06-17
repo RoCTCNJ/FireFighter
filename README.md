@@ -32,11 +32,12 @@ They run on 3-3.5v.
 # MOTOR SHIELD Doc
 https://cdn.sparkfun.com/datasheets/Robotics/ComMotion-Manual.pdf
 
+ComMotion Motor Driver by Dagu
+
 # How to Motor
 http://blog.hobbycomponents.com/?p=460
 
 https://filderbaer.wordpress.com/2014/10/15/building-an-arduino-bluetooth-robot-car-part-2-controlling-dc-motors/
 
 http://hobbycomponents.com/modules/264-l9110s-dc-stepper-motor-driver-h-bridge
-ComMotion Motor Driver by Dagu
 
