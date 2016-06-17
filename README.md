@@ -38,3 +38,6 @@ http://blog.hobbycomponents.com/?p=460
 https://filderbaer.wordpress.com/2014/10/15/building-an-arduino-bluetooth-robot-car-part-2-controlling-dc-motors/
 
 http://hobbycomponents.com/modules/264-l9110s-dc-stepper-motor-driver-h-bridge
+
+#ComMotion Motor Driver by Dagu
+http://www.dagurobot.com/goods.php?id=174
