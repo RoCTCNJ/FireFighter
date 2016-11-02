@@ -1,4 +1,4 @@
-nt left, right, front;
+int left, right, front;
 
 int E1 = 6;
 int M1 = 7;
