@@ -47,7 +47,7 @@ void loop() {
   readSensors();                                  //Read fire sensor and IR sensors.If fire is detected, sensedFire becomes true
   flameSensed = sensedFire();
   if (flameSensed == true){                         //senseFire is true, then the fan is on and the motors are off
-    blow();
+    blow(flameSensed);
     Serial.println("flameSensed is true");
     analogWrite(motor1Pin1, LOW);
     analogWrite(motor1Pin2, LOW);
@@ -62,6 +62,7 @@ void loop() {
   flameSensed = false;   
 }
 /***********************************************************************/
+
 boolean sensedFire()
 {
   if (fsense < 50)
@@ -117,8 +118,9 @@ void readSensors()
 }
 
 
-void blow(){
-if (x == 1) {
+void blow(flameSendsed){
+
+if (flameSensed == 1) {
     digitalWrite(fanPin, HIGH);
     Serial.println("x = 1, fanPin is on");
     delay(100);
@@ -134,6 +136,113 @@ if (x == 1) {
     delay(1000);
   }
 }
+
+
+
+
+
+void followRightWall()
+{
+  Serial.println("*****************runMotors*****************");
+  //DEFAULT: GO FORWARD
+  if ( rClose == 1 && fClose == 0 ) // if right is close and front is far, go forward
+  {
+    Serial.println(" ");
+    Serial.print("GO FORWARD");
+    Serial.println(" ");
+    goForward();  
+  }
+
+  /*
+  if ( lClose ==1 && fClose == 0 ) // if left is close and front is far, go forward
+  {
+    Serial.println(" ");
+    Serial.print("GO FORWARD");
+    Serial.println(" ");
+    goForward();  
+  }
+
+  //STOP
+  else if ( fClose && rClose ) // but if front left right are too ALL close, stop
+  {
+    Serial.println(" ");
+    Serial.print("STOP");
+    Serial.println(" ");
+    Stop();
+  }
+   */
+      
+  //TURN RIGHT
+  else if (rClose == 0) // if the right dist is far, then turn right 
+  {
+    Serial.println(" ");
+    Serial.println("TURN RIGHT");
+    Serial.println(" ");
+    turnRight();
+  }
+
+  else if ( lClose == 0 && rClose == 1 && fClose == 1 )
+  {
+    Serial.println(" ");
+    Serial.println("TURN LEFT");
+    Serial.println("");
+    turnLeft();
+  }
+
+  else
+  {
+    Stop();
+  }
+}
+
+//********************************************
+//Defining Robot's Potential Actions as functions
+//Stop, move forward, turn left, turn right
+//Call different order of functions depending on the potential
+//situations in the maze (3-way fork, left only, etc.)
+//********************************************
+
+void Stop()
+  {
+  analogWrite(motor1Pin1, LOW);
+  analogWrite(motor1Pin2, LOW);
+  analogWrite(motor2Pin1, LOW);
+  analogWrite(motor2Pin2, LOW);  
+  }
+
+void goForward()
+  {
+  analogWrite(motor1Pin1, LOW);
+  analogWrite(motor1Pin2, 255);
+  analogWrite(motor2Pin1, LOW);
+  analogWrite(motor2Pin2, 255);  
+  }
+
+void turnRight()
+  {
+  analogWrite(motor1Pin1, 200);
+  analogWrite(motor1Pin2, LOW);
+  analogWrite(motor2Pin1, LOW);
+  analogWrite(motor2Pin2, 200); 
+  }
+
+void turnLeft()
+  {
+  analogWrite(motor1Pin1, LOW);
+  analogWrite(motor1Pin2, 200);
+  analogWrite(motor2Pin1, 200);
+  analogWrite(motor2Pin2, LOW);  
+  }
+
+/*
+void tiltLeft()
+{
+  analogWrite(motor1Pin1, 100);
+  analogWrite(motor1Pin2, LOW);
+  analogWrite(motor2Pin1, 150);
+  analogWrite(motor2Pin2, LOW);
+}
+*/  
 
 
 
