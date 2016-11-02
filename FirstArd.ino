@@ -118,9 +118,9 @@ void readSensors()
 }
 
 
-void blow(flameSendsed){
+void blow(bool Sensed){
 
-if (flameSensed == 1) {
+if (Sensed == true) {
     digitalWrite(fanPin, HIGH);
     Serial.println("x = 1, fanPin is on");
     delay(100);
