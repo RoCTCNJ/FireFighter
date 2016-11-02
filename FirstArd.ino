@@ -118,13 +118,24 @@ void readSensors()
 
 
 void blow(){
-  /*
-  Wire.beginTransmission(9); // transmit to device #9
-  Wire.write(x);              // sends x 
-  Wire.endTransmission();    // stop transmitting
-  delay(500);
-*/
+if (x == 1) {
+    digitalWrite(fanPin, HIGH);
+    Serial.println("x = 1, fanPin is on");
+    delay(100);
+    digitalWrite(fanPin, LOW);
+    delay(100);
+  }
+  //If value received is 3 blink fanPin for 400 ms
+  else {
+    //digitalWrite(fanPin, HIGH);
+    Serial.println("x = 0, fanPin is off");
+    //delay(1000);
+    digitalWrite(fanPin, LOW);
+    delay(1000);
+  }
 }
+
+
 
 
 
