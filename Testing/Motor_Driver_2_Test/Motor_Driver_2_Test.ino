@@ -1,7 +1,7 @@
-int E1 = 6; //Speed 1
-int M1 = 7; //Direction 1
-int E2 = 5; //Speed 2                         
-int M2 = 4; //Direction 2
+int E1 = 6; //Speed 1       RIGHT MOTOR
+int M1 = 7; //Direction 1   RIGHT MOTOR
+int E2 = 5; //Speed 2       LEFT MOTOR         
+int M2 = 4; //Direction 2   LEFT MOTOR
 
 //OUTPUT HIGH for Forward
 //OUTPUT LOW for Reverse
