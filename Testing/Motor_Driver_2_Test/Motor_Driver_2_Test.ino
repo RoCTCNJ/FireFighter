@@ -14,17 +14,18 @@ void setup()
 
 void loop() 
 { 
-    digitalWrite(M1,HIGH);   
-    digitalWrite(M2,HIGH);       
-    analogWrite(E1, 250);   //PWM Speed Control
-    analogWrite(E2, 250);   //PWM Speed Control
-    delay(2000); 
+  digitalWrite(M1,LOW);   
+  digitalWrite(M2,HIGH);       
+  analogWrite(E1, 250);   //PWM Speed Control
+  analogWrite(E2, 250);   //PWM Speed Control 
+  
+  delay(400);
+
+  digitalWrite(M1,HIGH);   
+  digitalWrite(M2,HIGH);       
+  analogWrite(E1, 0);   //PWM Speed Control
+  analogWrite(E2, 0);   //PWM Speed Control
     
-    
-    digitalWrite(M1,LOW);   
-    digitalWrite(M2,LOW);       
-    analogWrite(E1, 250);   //PWM Speed Control
-    analogWrite(E2, 250);   //PWM Speed Control
-    delay(2000); 
-    
+
+  delay(5000);
 }

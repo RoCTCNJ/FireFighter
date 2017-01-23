@@ -1,4 +1,4 @@
-nt left, right, front;
+int left, right, front;
 
 int E1 = 6;
 int M1 = 7;
@@ -19,15 +19,15 @@ void loop()
  left = analogRead(1); //set x = data from analog port A#
  right = analogRead(2);
  front = analogRead(3);
- Serial.print(left); 
- Serial.print(" ");
+ //Serial.print(left); 
+ Serial.println(" ");
  Serial.print(front);
- Serial.print(" ");
- Serial.print(right);
- Serial.println();
- delay(1000); //Delay the output by 1s (1000ms) 
+ //Serial.println(" ");
+ //Serial.print(right);
+ //Serial.println();
+ delay(250); //Delay the output by 1s (1000ms) 
  
- 
+ /*
  //Motors
     digitalWrite(M1,HIGH);   
     digitalWrite(M2,HIGH);       
@@ -41,5 +41,5 @@ void loop()
     analogWrite(E1, 250);   //PWM Speed Control
     analogWrite(E2, 250);   //PWM Speed Control
     delay(2000); 
- 
+ */
 }
