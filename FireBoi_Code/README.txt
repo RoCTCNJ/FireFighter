@@ -1,5 +1,9 @@
-Here is FireBoi's code
+# Here is FireBoi's code
 
 Be nice to FireBoi
 
-MC
+- MC
+
+*Robothon 2017 Code*
+
+*Authors: Matthew Cook, Max Weissman, Sean Fernandez, Terry Skibik*
