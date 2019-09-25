@@ -13,7 +13,7 @@ void loop() {
   //Read flame sensor from port A0
   int sensorReading = analogRead(A0);
   //Map reading to 1 of 3 values
-  int range = map(sensorReading, sensorMin, sensorMax, 0, 2);
+  int range = map(sensorReading, sensorMin, sensorMax, 0, 3);
 
   //Print results
   switch (range) {
